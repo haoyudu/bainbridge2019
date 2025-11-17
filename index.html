@@ -1282,7 +1282,7 @@
                     type: jsPsychImageButtonResponse,
                     stimulus: '',  // No image at top
                     stimulus_height: null,
-                    choices: shuffled_images,
+                    choices: check.images, // TODO
                     button_html: '<button class="jspsych-btn"><img src="%choice%" style="height:350px; width:auto;"></button>',
                     prompt: `<div style="padding: 20px 0; font-size: 24px; font-weight: bold;">${check.instruction}</div>`,
                     enable_button_after: 1000,
