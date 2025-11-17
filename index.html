@@ -1108,7 +1108,7 @@
                 const final_save = {
                     type: jsPsychPipe,
                     action: "save",
-                    experiment_id: OSF_CONFIG.experiment_id,
+                    experiment_id: 'qk62i9LMX9Dg',
                     filename: OSF_CONFIG.filename,
                     data_string: () => jsPsych.data.get().json()
                 };
@@ -1225,7 +1225,7 @@
                     choices: shuffled_images,
                     button_html: '<button class="jspsych-btn"><img src="%choice%" style="height:350px; width:auto;"></button>',
                     prompt: '<p>Which photograph does this drawing best represent?</p>',
-                    enable_button_after: 1000,
+                    enable_button_after: 1000, 
                     data: {
                         task: 'main_trial',
                         trial_number: trial_number,
