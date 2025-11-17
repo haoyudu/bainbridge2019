@@ -84,7 +84,7 @@
             const SAVE_FREQUENCY = 5;
 
             const OSF_CONFIG = {
-                experiment_id: 'ovx64kYVxBXt',
+                experiment_id: 'aNvPLfDxh5kM',
                 filename: null // dynamic by datapipe
                 // dataType: 'json'
             };
@@ -913,10 +913,18 @@
                 const study_id = urlParams.get('STUDY_ID') || null;
                 const session_id = urlParams.get('SESSION_ID') || null;
 
-                participant_id = prolific_pid || 'debug_' + Date.now();
+                const timestamp = Date.now();
+                let filename_base;
+                if (prolific_pid) {
+                    const last4chars = prolific_pid.slice(-4);
+                    filename_base = `${last4chars}_${timestamp}`;
+                } else {
+                    filename_base = `debug_${timestamp}`;
+                }
 
                 // datapipe filename with participant ID
-                OSF_CONFIG.filename = `${participant_id}.json`;
+                participant_id = filename_base;
+                OSF_CONFIG.filename = `${filename_base}.json`;
 
                 jsPsych = initJsPsych({
                     show_progress_bar: true,
@@ -1008,7 +1016,7 @@
                             <h1>Welcome to the Drawing Match!</h1>
                             <p>Thank you for participating in this study.</p>
                             <p>In this experiment, you will see drawings of everyday scenes. Your task is to match each drawing to one of three photographs.</p>
-                            <p>The experiment will take 5-10 minutes to complete.</p>
+                            <p>The experiment will take 10-15 minutes to complete.</p>
                             <p><strong>Important:</strong></p>
                             <ul style="text-align: left;">
                                 <li>Please enter into **fullscreen** mode on your browser</li>
@@ -1282,7 +1290,7 @@
                     type: jsPsychImageButtonResponse,
                     stimulus: '',  // No image at top
                     stimulus_height: null,
-                    choices: check.images, // TODO
+                    choices: check.images,
                     button_html: '<button class="jspsych-btn"><img src="%choice%" style="height:350px; width:auto;"></button>',
                     prompt: `<div style="padding: 20px 0; font-size: 24px; font-weight: bold;">${check.instruction}</div>`,
                     enable_button_after: 1000,
