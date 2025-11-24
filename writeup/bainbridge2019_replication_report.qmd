@@ -116,7 +116,7 @@ The primary construct of interest is drawing recognizability, operationalized as
 You can comment this section out prior to final report with data collection.
 
 #### Actual Sample
-  Sample size, demographics, data exclusions based on rules spelled out in analysis plan
+Pilot B included 6 participants recruited via Prolific. No participants were excluded based on the preregistered criteria: all completed 60 trials, passed attention checks, reported no technical difficulties, and showed adequate response times and compliance. All 360 trials were retained after applying the 1200ms RT threshold.
 
 #### Differences from pre-data collection methods plan
   Any differences from what was described as the original plan, or “none”.
@@ -143,7 +143,15 @@ Descriptive statistics will be presented in a table showing the number of drawin
 
 The primary hypothesis will be tested using the two-tailed Wilcoxon rank-sum test as specified in the Analysis Plan.
 
+Delayed Recall drawings (Median = 0.833) were significantly more recognizable than Category Drawings (Median = 0.333), $W = 29{,}108$, $p = 1.19 \times 10^{-39}$, rank-biserial $r = 0.80$, 95% CI [0.75, 0.84].
+
 **Assumption checks:** Prior to the confirmatory test, we will assess the appropriateness of the supplementary parametric analysis by checking normality and homogeneity of variance. Shapiro-Wilk tests will be conducted on both conditions' accuracy distributions to assess normality. Quantile-quantile plots will be generated for visual inspection of normality. Levene's test will assess homogeneity of variance between conditions. Results of these checks will determine whether the supplementary t-test uses standard Student's t-test (if assumptions met) or Welch's correction (if variances unequal). If either group shows strong violation of normality (Shapiro-Wilk p < 0.01), we will prioritize the Wilcoxon test as the primary analysis and report it most prominently.
+
+Both conditions violated normality (Delayed Recall: $W = 0.84$, $p = 3.37 \times 10^{-13}$; Category: $W = 0.91$, $p = 1.27 \times 10^{-8}$) and homogeneity of variance (Levene's $F = 27.74$, $p = 2.40 \times 10^{-7}$). Welch's correction was applied.
+
+Delayed Recall drawings ($M = 0.757$, $SD = 0.261$) were significantly more recognizable than Category Drawings ($M = 0.317$, $SD = 0.144$), $t(290.12) = 19.94$, $p = 2.60 \times 10^{-56}$, Cohen's $d = 2.07$, 95% CI [1.81, 2.33].
+
+The replication criteria were met: significant difference ($p < 0.05$) and large effect size ($r = 0.80 \gg 0.3$ threshold).
 
 **Expected reporting:** 
 

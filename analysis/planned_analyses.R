@@ -161,17 +161,11 @@ summary_stats <- drawing_accuracy %>%
     .groups = "drop"
   )
 
-# print results
-cat("=== PARTICIPANT EXCLUSIONS ===\n")
-print(participants_to_exclude %>% 
-        summarise_at(vars(starts_with("exclude")), sum, na.rm = TRUE))
 
-cat("\n=== TRIAL EXCLUSIONS ===\n")
 cat("Participants with >20% trials excluded:", nrow(trial_exclusion_check), "\n")
 cat("Final sample size:", length(unique(final_trial_data$participant_id)), "participants\n")
 cat("Total valid trials:", nrow(final_trial_data), "\n")
 
-cat("\n=== DRAWING-LEVEL SUMMARY ===\n")
 print(summary_stats)
 
 cat("\n=== CONFIRMATORY ANALYSIS ===\n")
@@ -191,8 +185,25 @@ cat("t =", t_result$statistic, ", df =", t_result$parameter, ", p =", t_result$p
 cat("Cohen's d =", cohens_d$Cohens_d, 
     ", 95% CI [", cohens_d$CI_low, ",", cohens_d$CI_high, "]\n")
 
-cat("\n=== REPLICATION SUCCESS ===\n")
-replication_success <- wilcox_result$p.value < 0.05 & rank_biserial_r$r_rank_biserial >= 0.3
-cat("Criteria met:", replication_success, "\n")
-cat("- Significant difference (p < 0.05):", wilcox_result$p.value < 0.05, "\n")
-cat("- Medium effect size (r >= 0.3):", rank_biserial_r$r_rank_biserial >= 0.3, "\n")
+library(ggplot2)
+
+# create plot similar to original paper
+ggplot(drawing_accuracy, aes(x = condition, y = accuracy)) +
+  geom_point(alpha = 0.6, position = position_jitter(width = 0.2)) +
+  stat_summary(fun = mean, geom = "crossbar", color = "red", width = 0.3) +
+  geom_hline(yintercept = 0.333, linetype = "dashed", color = "gray") +
+  labs(title = "Drawing-to-Picture Matching Accuracy", 
+       x = "Drawing Condition", y = "Proportion Correct",
+       caption = "Dashed line = chance (33.3%)") +
+  ylim(0, 1) +
+  theme_minimal()
+
+# side-by-side histograms
+ggplot(drawing_accuracy, aes(x = accuracy, fill = condition)) +
+  geom_histogram(alpha = 0.7, bins = 20, position = "identity") +
+  geom_vline(xintercept = 0.333, linetype = "dashed") +
+  facet_wrap(~condition) +
+  labs(title = "Distribution of Accuracy Scores by Condition",
+       x = "Accuracy", y = "Count") +
+  theme_minimal()
+
