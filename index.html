@@ -84,7 +84,7 @@
             const SAVE_FREQUENCY = 5;
 
             const OSF_CONFIG = {
-                experiment_id: 'qk62i9LMX9Dg',
+                experiment_id: 'PLACEHOLDER',
                 filename: null // dynamic by datapipe
                 // dataType: 'json'
             };
@@ -117,7 +117,7 @@
                 'tower'
             ];
 
-            const COMPLETION_CODE = 'CUNVMFZA' // TODO: currently using pilot B completion code
+            const COMPLETION_CODE = 'PLACEHOLDER' 
             
             // stimulus
             
@@ -1108,7 +1108,7 @@
                 const final_save = {
                     type: jsPsychPipe,
                     action: "save",
-                    experiment_id: 'qk62i9LMX9Dg',
+                    experiment_id: 'PLACEHOLDER',
                     filename: OSF_CONFIG.filename,
                     data_string: () => jsPsych.data.get().json()
                 };
@@ -1140,7 +1140,7 @@
                         const prolific_pid = urlParams.get('PROLIFIC_PID');
                         
                         if (prolific_pid) {
-                            window.location.href = `https://app.prolific.com/submissions/complete?cc=CUNVMFZA`; // TODO
+                            window.location.href = `https://app.prolific.com/submissions/complete?cc=PLACEHOLDER`; 
                         }
                     }
                 };
