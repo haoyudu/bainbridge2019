@@ -21,8 +21,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+      - name: Render Quarto Site
+        run: quarto render
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
