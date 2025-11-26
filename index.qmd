@@ -1,23 +1,18 @@
-<!-- uncomment for html renders -->
-<!-- ---
-title: "Replication of Drawings of real-world scenes during free recall reveal detailed object and spatial information in memory by Bainbridge et al. (2019, Nature Communications)"
+---
+title: "Replication of Drawing Match from Bainbridge et al. (2019, Nature Communications)"
 author: "Haoyu Du (h6du)"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 format:
   html:
     toc: true
     toc_depth: 3
---- -->
+---
 
 ## Introduction
 
-Bainbridge et al. (2019) uses a free recall drawing paradigm to investigate the diagnosticity of visual memory for static, real-world scenes. Their results show that participants’ drawings, both immediately and after a delay, could reliably capture object and spatial information.  The study is methodologically rigorous, incorporating drawing, memory, and rating tasks. While replicating the free drawing component is too resource-intensive, it is feasible and worthwhile to recruit new participants on Prolific to complete the drawing-to-picture matching task using the existing drawing dataset, allowing for an assessment of the robustness of the original main effect. If time permits, we will conduct a model-based analysis using vision-language models (e.g., CLIP or DeepMeaning) to provide a computational benchmark for alignment with human performance, though that is not the main goal for this project.
+Understanding the diagnosticity of visual scenes and the relationship between visual saliency and memory represents a key area of cognitive research with important applications in developmental psychology. Bainbridge et al. (2019) established a methodologically robust paradigm demonstrating that delayed recall drawings contain image-specific visual information beyond categorical representations. Replicating this core finding is essential to establish the reliability of the drawing-to-picture matching paradigm before extending it to investigate developmental differences in visual recall and the role of visual saliency in memory diagnosticity. The current replication focuses specifically on the contrast between delayed recall and category drawings, which provides the strongest theoretical test of whether memory representations preserve image-specific visual details.
 
-The original stimulus set contains 90 scene images, 3 per scene category. These images are selected from validated naturalistic scene image datasets, controlled for memorability and low-level visual features. For the present replication, we select a subset of the categories that contain images that are appropriate for future extension to developmental studies. Specifically, we have chosen [17 of the original 30 scene categories](https://github.com/haoyudu/bainbridge2019/tree/main/data/stim) based on their suitability for children (e.g., playground, bedroom, kitchen), retaining both high-memorable and low-memorable exemplars per category for a total of 30 images that have drawings, and using the original foil in each category to preserve the 3AFC experimental design. 
-
-The target comparison for this replication is the contrast between Delayed Recall drawings and Category Drawings, which is one of the most theoretically important effects demonstrating that memory drawings contain visual information specific to the studied images rather than merely canonical representations of scene categories. In the original study, Delayed Recall drawings were correctly matched to their corresponding images significantly more than Category Drawings with a very large effect size (Cohen's d $\approx$ 3.7). Given this robust effect, we significantly downsize the stimulus set and the sample size, but conserve some integrity to the original study with thoughtful subsampling.
-
-Following the original procedure, each drawing will be presented alongside 3 scene images from the same category (1 target, 2 foils), and raters will judge which image the drawing best represents. To balance statistical power with cost efficiency, we will recruit 10-12 independent raters per drawing (as opposed to 24 in the original study), as the high inter-rater reliability suggests that fewer raters will still provide stable estimates. 14 Prolific participants will complete approximately 60 trials each. 
+We selected $17$ scene categories appropriate for potential developmental extensions, using both high-memorable and low-memorable exemplars to preserve the original memorability manipulation. Our key hypothesis is that Delayed Recall drawings will be matched to their target images significantly more accurately than Category Drawings, replicating the original finding with a modern online implementation.
 
 ::: {.callout-note}
 ### Links
@@ -27,6 +22,8 @@ Following the original procedure, each drawing will be presented alongside 3 sce
 Original paper: Bainbridge, W.A., Hall, E.H. & Baker, C.I. [Drawings of real-world scenes during free recall reveal detailed object and spatial information in memory.](https://github.com/haoyudu/bainbridge2019/blob/main/original_paper/bainbridge2019.pdf) Nat Commun 10, 5 (2019). 
 
 [Experimental paradigm](https://github.com/psyc-201/bainbridge2019/blob/main/experiment/index.html)
+
+[Preregistration](https://osf.io/q8fnd/overview)
 ::: 
 
 
@@ -34,23 +31,57 @@ Original paper: Bainbridge, W.A., Hall, E.H. & Baker, C.I. [Drawings of real-wor
 
 ### Power Analysis
 
-In the original study, Delayed Recall drawings were correctly matched to their corresponding images by 84.3% of raters (SD = 10.9%), significantly outperforming Category Drawings at 30.7% (SD = 17.4%), yielding a very large effect size (Cohen's d $\approx$ 3.7).Given this robust effect, we conducted an *a priori* conservative power analysis for an independent samples t-test (two-tailed) assuming a substantially attenuated effect size of d = 2.0, $\alpha$  = 0.05, and 90% power, which indicated that only 7 drawings per condition (14 total) would be required to detect the effect with 90% power. 
+In the original study, Delayed Recall drawings were correctly matched to their corresponding images by $84.3\%$ of raters ($SD = 10.9\%$), significantly outperforming Category Drawings at $30.7\%$ ($SD = 17.4\%$), yielding a very large effect size (Cohen's $d \approx 3.7$). Given this robust effect, we conducted an *a priori* conservative power analysis for an independent samples t-test (two-tailed) assuming a substantially attenuated effect size of $d = 2.0$, $\alpha  = 0.05$, and $90\%$ power, which indicated that only $7$ drawings per condition ($14$ total) would be required to detect the effect with $90\%$ power. 
 
-To maintain fidelity to the original study's design and enable exploratory analyses by category and memorability, we will rate 34 Delayed Recall drawings and 34 Category Drawings (68 total) from 17 selected scene categories. Specifically, both image exemplars per category (one high-memorable and one low-memorable) will be included, preserving the original memorability manipulation and allowing for some within-category comparisons. With this sample size, the study achieves greater than 99% power to detect an effect of d = 2.0, and remains well-powered even if the true effect size is as small as d = 1.0. Additionally, while the original study employed 24 independent raters per drawing, we will use 10-12 per drawing to balance cost efficiency with measurement reliability. Given the high accuracy and inter-rater reliability in the original study (inferred from proportion correct), 10-12 raters should provide stable estimates of drawing recognizability. 
+To maintain fidelity to the original study's design and enable exploratory analyses by category and memorability, we will rate $34$ Delayed Recall drawings and $34$ Category Drawings ($68$ total) from $17$ selected scene categories. Specifically, both image exemplars per category (one high-memorable and one low-memorable) will be included, preserving the original memorability manipulation and allowing for some within-category comparisons. With this sample size, the study achieves greater than $99\%$ power to detect an effect of $d = 2.0$, and remains well-powered even if the true effect size is as small as $d = 1.0$. Additionally, while the original study employed $24$ independent raters per drawing, we will use $10$-$12$ per drawing to balance cost efficiency with measurement reliability. Given the high accuracy and inter-rater reliability in the original study (inferred from proportion correct), $10$-$12$ raters should provide stable estimates of drawing recognizability.
 
 
 ### Planned Sample
 
-Approximately 14 participants will be recruited via [Prolific](www.prolific.com) to complete the drawing-to-picture matching task. Eligibility criteria include fluent English speakers, age 18 years or older, normal or corrected-to-normal vision, and approval rating of 95% or higher on Prolific. Ideally, participants would have no prior exposure to the Bainbridge et al. (2019) stimulus set; however, Prolific does not provide automatic screening for this criterion across different researchers. Each participant will complete 60 trials, matching the original study's average of 58.2 trials per participant. With 68 drawings requiring 12 ratings each, this yields 816 total trials distributed across 14 participants (60 trials per participant times 14 participants equals 840 possible ratings, accounting for minor variation in completion rates and attention checks). 
+Approximately $12$ participants will be recruited via [Prolific](www.prolific.com) to complete the drawing-to-picture matching task. Eligibility criteria include fluent English speakers, age $18$ years or older, normal or corrected-to-normal vision. Ideally, participants would have no prior exposure to the Bainbridge et al. (2019) stimulus set; however, Prolific does not provide automatic screening for this criterion across different researchers. Each participant will complete $60$ trials, matching the original study's average of $58.2$ trials per participant. With $68$ drawings requiring $10$ ratings each, this yields $680$ total trials distributed across $12$ participants ($60$ trials per participant times $12$ participants equals $720$ possible ratings, accounting for minor variation in completion rates and attention checks).
 
-Data collection will continue until all 68 drawings have received at least 10 complete ratings from unique participants who pass quality control checks (detailed below). If initial recruitment yields fewer than 10 usable ratings per drawing, additional participants will be recruited in batches of 2-3 until the target is reached. Participants will be paid \$3 for approximately 12 minutes of work (\$15 per hour). 
+Data collection will continue until all $68$ drawings have received at least $10$ complete ratings from unique participants who pass quality control checks (detailed below). If initial recruitment yields fewer than $10$ usable ratings per drawing, additional participants will be recruited in batches of $2$-$3$ until the target is reached. Participants will be paid $\$2.5$ for approximately $12$ minutes of work ($\$12$ per hour).
 
+```{r sample-check}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(tidyverse)
+trial_data <- read.csv("output/clean_trial_data_full_sample.csv")
+
+ratings_per_drawing <- trial_data %>%
+  group_by(drawing_filename, condition) %>%
+  summarise(n_ratings = n(), .groups = 'drop') %>%
+  arrange(n_ratings)
+
+min_ratings <- min(ratings_per_drawing$n_ratings)
+max_ratings <- max(ratings_per_drawing$n_ratings)
+mean_ratings <- mean(ratings_per_drawing$n_ratings)
+total_participants <- length(unique(trial_data$participant_id))
+total_drawings <- nrow(ratings_per_drawing)
+n_drawings_below_target <- sum(ratings_per_drawing$n_ratings < 10)
+
+# Count by condition for those below target
+below_target_by_condition <- ratings_per_drawing %>%
+  filter(n_ratings < 10) %>%
+  count(condition)
+
+n_delayed_below <- below_target_by_condition$n[below_target_by_condition$condition == "delayed_recall"]
+n_category_below <- below_target_by_condition$n[below_target_by_condition$condition == "category"]
+
+# one condition has no drawings below target
+if(length(n_delayed_below) == 0) n_delayed_below <- 0
+if(length(n_category_below) == 0) n_category_below <- 0
+```
+
+**Actual Sample:** Data collection yielded `r total_participants` participants who completed all quality control requirements. This resulted in `r round(mean_ratings, 1)` ratings per drawing on average (range: `r min_ratings`-`r max_ratings`), with `r n_drawings_below_target` drawings receiving fewer than the target $10$ ratings (`r n_delayed_below` delayed recall, `r n_category_below` category drawings). All drawings were retained for analysis as $8$-$9$ ratings still provide reasonable estimates of drawing recognizability.
 
 ### Materials
 
-The stimuli consist of real-world scene photographs from the SUN database (Xiao et al., 2010). From the original 30 scene categories, we selected 17 categories appropriate for potential developmental extensions: amusement park, badlands, bathroom, bedroom, dining room, farm, fountain, garden, house, kitchen, lighthouse, living room, mountain, playground, pool, street, tower. For each category, there are two image exemplars (one high-memorable and one low-memorable based on prior memorability scores from Isola et al., 2011) and one medium-memorable foil image. This gives us 34 target images (2 per category times 17 categories) and 17 foil images (1 per category). All images are 512 pixels on the longest dimension and approximately 14 degrees of visual angle when viewed on a standard monitor at typical viewing distance. 
+The stimuli consist of real-world scene photographs from the SUN database (Xiao et al., 2010). From the original $30$ scene categories, we selected $17$ categories appropriate for potential developmental extensions: amusement park, badlands, bathroom, bedroom, dining room, farm, fountain, garden, house, kitchen, lighthouse, living room, mountain, playground, pool, street, tower. For each category, there are two image exemplars (one high-memorable and one low-memorable based on prior memorability scores from Isola et al., 2011) and one medium-memorable foil image. This gives us $34$ target images ($2$ per category times $17$ categories) and $17$ foil images ($1$ per category). All images are $512$ pixels on the longest dimension and approximately $14$ degrees of visual angle when viewed on a standard monitor at typical viewing distance. 
 
-The drawings are from the publicly available dataset associated with Bainbridge et al. (2019), accessed via [Harvard Dataverse](https://dataverse.harvard.edu/dataverse/drawingrecall). Two types of drawings will be used as stimuli for this replication experiment. First, Delayed Recall drawings (n = 34) were created by participants who studied 30 scene images for 10 seconds each, completed an 11-minute digit span distractor task, and then drew as many images as they could remember from memory. For each of the 34 target images in the selected categories, one Delayed Recall drawing will be selected from the available drawings for that image. When multiple drawings are available for an image, one will be randomly selected using R's `sample()` function to reduce researcher bias in drawing selection. Second, Category Drawings (n = 34) were created by participants who were given only the scene category name (e.g., "kitchen") and asked to draw a typical example of that category without viewing any specific image. Two Category Drawings per selected category will be randomly sampled from the 15 available Category Drawings per category in the original dataset. 
+The drawings are from the publicly available dataset associated with Bainbridge et al. (2019), accessed via [Harvard Dataverse](https://dataverse.harvard.edu/dataverse/drawingrecall). Two types of drawings will be used as stimuli for this replication experiment. First, Delayed Recall drawings ($n = 34$) were created by participants who studied $30$ scene images for $10$ seconds each, completed an $11$-minute digit span distractor task, and then drew as many images as they could remember from memory. For each of the $34$ target images in the selected categories, one Delayed Recall drawing will be selected from the available drawings for that image. When multiple drawings are available for an image, one will be randomly selected using R's `sample()` function to reduce researcher bias in drawing selection. Second, Category Drawings ($n = 34$) were created by participants who were given only the scene category name (e.g., "kitchen") and asked to draw a typical example of that category without viewing any specific image. Two Category Drawings per selected category will be randomly sampled from the $15$ available Category Drawings per category in the original dataset. 
 
 All drawings are pen-and-paper sketches and scanned as JPG files. Filenames in the original dataset follow the format `[condition]_[subnum]_[imnum]_[memorability]_[scene].jpg`, enabling identification of which target image corresponds to each drawing.
 

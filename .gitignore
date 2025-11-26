@@ -65,3 +65,4 @@ rsconnect/
 .ipynb_checkpoints/
 _output/
 output/*.csv
+data/full_sample_raw/
