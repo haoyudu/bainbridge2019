@@ -6,7 +6,7 @@ library(readr)
 library(purrr)
 
 # load data
-json_files <- list.files("~/Desktop/replication-pilotB", pattern = ".*_pilotB\\.json$", full.names = TRUE)
+json_files <- list.files("~/Desktop/full_sample_raw", pattern = ".*.json$", full.names = TRUE)
 raw_data <- map_dfr(json_files, function(file) {
   data <- fromJSON(file, flatten = TRUE)
   return(data)
@@ -83,12 +83,17 @@ final_trial_data <- trial_data_clean %>%
          memorability, target_image, selected_image, correct, selected_type, rt)
 
 # save participant exclusion summary
-write_csv(participants_to_exclude, "../output/participant_exclusions.csv")
+write_csv(participants_to_exclude, "../output/participant_exclusions_full_sample.csv")
 cat("Participant exclusion data saved to: participant_exclusions.csv\n")
 
 # save clean trial-level data
-write_csv(final_trial_data, "../output/clean_trial_data.csv")
+write_csv(final_trial_data, "../output/clean_trial_data_full_sample.csv")
 cat("Clean trial-level data saved to: clean_trial_data.csv\n")
+
+cat("Participants with >20% trials excluded:", nrow(trial_exclusion_check), "\n")
+cat("Final sample size:", length(unique(final_trial_data$participant_id)), "participants\n")
+cat("Total valid trials:", nrow(final_trial_data), "\n")
+
 
 # calculate drawing-level accuracy
 drawing_accuracy <- final_trial_data %>%
@@ -106,8 +111,8 @@ drawing_accuracy <- final_trial_data %>%
     .groups = "drop"
   ) %>%
   # PILOT B ONLY
-  filter(n_raters >= 1)
-  # filter(n_raters >= 10)
+  # filter(n_raters >= 1)
+  filter(n_raters >= 10)
 
 # save drawing-level accuracy data
 write_csv(drawing_accuracy, "../output/drawing_accuracy_data.csv")
@@ -162,9 +167,6 @@ summary_stats <- drawing_accuracy %>%
   )
 
 
-cat("Participants with >20% trials excluded:", nrow(trial_exclusion_check), "\n")
-cat("Final sample size:", length(unique(final_trial_data$participant_id)), "participants\n")
-cat("Total valid trials:", nrow(final_trial_data), "\n")
 
 print(summary_stats)
 

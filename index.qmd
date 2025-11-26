@@ -19,13 +19,15 @@ The target comparison for this replication is the contrast between Delayed Recal
 
 Following the original procedure, each drawing will be presented alongside 3 scene images from the same category (1 target, 2 foils), and raters will judge which image the drawing best represents. To balance statistical power with cost efficiency, we will recruit 10-12 independent raters per drawing (as opposed to 24 in the original study), as the high inter-rater reliability suggests that fewer raters will still provide stable estimates. 14 Prolific participants will complete approximately 60 trials each. 
 
-
+::: {.callout-note}
 ### Links
 
 [Project repository](https://github.com/haoyudu/bainbridge2019)
 
 Original paper: Bainbridge, W.A., Hall, E.H. & Baker, C.I. [Drawings of real-world scenes during free recall reveal detailed object and spatial information in memory.](https://github.com/haoyudu/bainbridge2019/blob/main/original_paper/bainbridge2019.pdf) Nat Commun 10, 5 (2019). 
 
+[Experimental paradigm](https://github.com/haoyudu/bainbridge2019/experiment/index.html)
+::: 
 
 
 ## Methods
