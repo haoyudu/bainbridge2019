@@ -15,7 +15,4 @@ format:
     theme: cosmo
     code-fold: false
     number-sections: true
-  pdf:
-    documentclass: article
-    number-sections: true
     
