@@ -330,7 +330,7 @@ replication_plot <- ggplot(plot_data_qc, aes(x = Condition, y = accuracy)) +
     axis.line.y = element_line(color = "black")
   )
 
-print(replication_plot)
+ggsave("output/results/replication_plot_qc.png", plot = replication_plot, width = 4, height = 5, dpi = 300)
 
 ```
 
@@ -369,37 +369,8 @@ full_dataset_plot <- plot_v2 <- ggplot(plot_data_all, aes(x = Condition, y = acc
     axis.line.y = element_line(color = "black")
   )
 
-print(full_dataset_plot)
+ggsave("output/results/full_dataset_plot.png", plot = full_dataset_plot, width = 4, height = 5, dpi = 300)
 
-```
-
-
-```{r error-bar-plot}
-#| echo: false
-#| message: false
-#| warning: false
-# ggplot(plot_data, aes(x = Condition, y = accuracy)) +
-#   geom_point(alpha = 0.6, size = 1.5, 
-#              position = position_jitter(width = 0.1, seed = 42)) +
-#   stat_summary(fun = mean, geom = "point", size = 3, 
-#                aes(color = Condition), show.legend = FALSE) +
-#   stat_summary(fun.data = mean_cl_boot, geom = "errorbar", 
-#                width = 0.1, size = 1, aes(color = Condition), show.legend = FALSE) +
-#   geom_hline(yintercept = 1/3, linetype = "dashed", alpha = 0.7) +
-#   annotate("text", x = 2.3, y = 1/3, label = "Chance", vjust = -0.5, size = 3) +
-#   scale_y_continuous(limits = c(0, 1), labels = percent_format(),
-#                      breaks = seq(0, 1, 0.1)) +
-#   scale_color_viridis_d(begin = 0.2, end = 0.8) +
-#   labs(title = "Proportion of trials drawing was\nmatched to correct image",
-#        y = "Proportion of trials matched", 
-#        x = "") +
-#   theme_minimal() +
-#   theme(
-#     legend.position = "none",
-#     panel.grid.minor = element_blank(),
-#     axis.text.x = element_text(size = 10),
-#     plot.title = element_text(hjust = 0.5, size = 11)
-#   )
 ```
 
 The primary hypothesis was tested using a two-tailed Wilcoxon rank-sum test comparing accuracy distributions between Delayed Recall and Category drawings. Delayed Recall drawings (M = `r round(median(delayed_accuracy), 3)`) were significantly more recognizable than Category Drawings (M = `r round(median(category_accuracy), 3)`), W = `r wilcox_result$statistic`, p = `r format.pval(wilcox_result$p.value, digits = 3)`, rank-biserial r = `r round(rank_biserial, 3)`.
