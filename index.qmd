@@ -295,7 +295,9 @@ cohens_d <- (mean(delayed_accuracy) - mean(category_accuracy)) / pooled_sd
 ```
 
 ```{r fig.width=4, fig.height=5}
-
+#| echo: true
+#| message: false
+#| warning: false
 library(scales)
 plot_data_qc <- drawing_accuracy_adequate %>%
   mutate(Condition = ifelse(condition == "delayed_recall", "Delayed Recall", "Category Drawing")) %>%
@@ -335,6 +337,9 @@ ggsave("output/results/replication_plot_qc.png", plot = replication_plot, width 
 ```
 
 ```{r fig.width=4, fig.height=5}
+#| echo: true
+#| message: false
+#| warning: false
 plot_data_all <- drawing_accuracy %>% 
   mutate(Condition = ifelse(condition == "delayed_recall", "Delayed Recall", "Category Drawing")) %>%
   mutate(Condition = factor(Condition, levels = c("Category Drawing", "Delayed Recall")))
