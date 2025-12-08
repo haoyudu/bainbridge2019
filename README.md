@@ -1,9 +1,6 @@
-# PSYC 201A replication project
+# Replication of Drawing Match from Bainbridge et al. (2019, Nature Communications)
 
-I don't know what to put in the readme for now. So I will just leave this here. 
+Project Report: [https://psyc-201.github.io/bainbridge2019/](https://psyc-201.github.io/bainbridge2019/)
 
 
-See the [replication report](writeup/bainbridge2019_replication_report.qmd) for details.
-
-Or view the [rendered notebook](writeup/bainbridge2019_replication_report.ipynb).
 
