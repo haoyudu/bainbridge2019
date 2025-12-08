@@ -251,7 +251,9 @@ desc_stats_adequate <- drawing_accuracy_adequate %>%
   )
 ```
 
-The final dataset contains `r nrow(drawing_accuracy_adequate)` drawings with the following variables: drawing filename, condition (Delayed Recall or Category), category, memorability (high or low), number of raters, number correct, and accuracy (proportion correct). Delayed Recall drawings achieved a mean accuracy of `r round(desc_stats_adequate$mean_accuracy[desc_stats_adequate$condition == "delayed_recall"], 3)` (SD = `r round(desc_stats_adequate$sd_accuracy[desc_stats_adequate$condition == "delayed_recall"], 3)`), while Category Drawings achieved `r round(desc_stats_adequate$mean_accuracy[desc_stats_adequate$condition == "category"], 3)` (SD = `r round(desc_stats_adequate$sd_accuracy[desc_stats_adequate$condition == "category"], 3)`).
+The final dataset contains `r nrow(drawing_accuracy_adequate)` drawings with the following variables: drawing filename, condition (Delayed Recall or Category), category, memorability (high or low), number of raters, number correct, and accuracy (proportion correct). Delayed Recall drawings achieved a mean accuracy of `r round(desc_stats_adequate$mean_accuracy[desc_stats_adequate$condition == "delayed_recall"], 3)` (SD = `r round(desc_stats_adequate$sd_accuracy[desc_stats_adequate$condition == "delayed_recall"], 3)`), meaning Delayed Recall drawings were correctly matched to their original images from among same category foils by `r round(desc_stats_adequate$mean_accuracy[desc_stats_adequate$condition == "delayed_recall"], 3)*100`\% of Prolific workers on average. Category Drawings achieved `r round(desc_stats_adequate$mean_accuracy[desc_stats_adequate$condition == "category"], 3)` (SD = `r round(desc_stats_adequate$sd_accuracy[desc_stats_adequate$condition == "category"], 3)`), meaning they were on average matched near chance. 
+
+### Primary confirmatory analysis
 
 ```{r primary-results-plots}
 #| echo: true
@@ -284,8 +286,11 @@ levene_result <- leveneTest(accuracy ~ condition, data = drawing_accuracy_adequa
 # sensitivity analysis: t-test
 t_result <- t.test(accuracy ~ condition, data = drawing_accuracy_adequate, 
                    alternative = "two.sided", var.equal = FALSE)
+# z stat
+z_stat <- qnorm(wilcox_result$p.value/2, lower.tail = FALSE) * 
+          sign(median(delayed_accuracy) - median(category_accuracy))
 
-# Cohen's d - use manual calculation to get correct sign
+# Cohen's d
 n_delayed <- length(delayed_accuracy)
 n_category <- length(category_accuracy)
 pooled_sd <- sqrt(((n_delayed - 1) * var(delayed_accuracy) + 
@@ -336,6 +341,72 @@ ggsave("output/results/replication_plot_qc.png", plot = replication_plot, width 
 
 ```
 
+The primary hypothesis was tested using a two-tailed Wilcoxon rank-sum test comparing accuracy distributions between Delayed Recall and Category drawings. Note that Bainbridge et al. (2019) applied Bonferroni correction because they conducted multiple pairwise comparisons across four experimental conditions. Since our replication focuses on the single theoretically critical comparison between Delayed Recall and Category Drawing conditions, no multiple comparison correction is needed (alpha = 0.05 as preregistered). 
+
+```{r, fig.show="hold", out.width="50%", fig.cap=c("Current Replication Results", "Original Results (Bainbridge et al., 2019)"), fig.align="center"}
+knitr::include_graphics(c("output/results/replication_plot_qc.png","output/results/original_plot.png"))
+```
+
+**Delayed Recall drawings (Median = `r round(median(delayed_accuracy), 3)`) were significantly more recognizable than Category Drawings (Median = `r round(median(category_accuracy), 3)`), W = `r wilcox_result$statistic`, Z = `r round(z_stat, 2)`, p = `r format.pval(wilcox_result$p.value, digits = 3)`, rank-biserial r = `r round(rank_biserial, 3)`.**
+
+
+```{r q-q-normality}
+# Q-Q plots for normality assessment
+qq_data <- data.frame(
+  accuracy = c(delayed_accuracy, category_accuracy),
+  condition = c(rep("Delayed Recall", length(delayed_accuracy)),
+                rep("Category Drawing", length(category_accuracy)))
+)
+
+qq_plots <- ggplot(qq_data, aes(sample = accuracy)) +
+  stat_qq(aes(color = condition), alpha = 0.7) +
+  stat_qq_line(aes(color = condition)) +
+  facet_wrap(~ condition) +
+  scale_color_viridis_d(begin = 0.3, end = 0.8) +
+  labs(title = "Q-Q Plots for Normality Assessment",
+       x = "Theoretical Quantiles",
+       y = "Sample Quantiles") +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    strip.text = element_text(size = 10),
+    plot.title = element_text(hjust = 0.5, size = 11)
+  )
+
+ggsave("output/results/qq_plots.png", plot = qq_plots, width = 8, height = 4, dpi = 300)
+
+```
+
+To check our assumptions, we applied Shapiro-Wilk tests which indicated both conditions violated normality assumptions (Delayed Recall: W = `r round(shapiro_delayed$statistic, 3)`, p = `r format.pval(shapiro_delayed$p.value, digits = 3)`; Category: W = `r round(shapiro_category$statistic, 3)`, p = `r format.pval(shapiro_category$p.value, digits = 3)`). Visual inspection of Q-Q plots confirming these departures, with the Delayed Recall condition showing particularly severe deviations due to a ceiling effect. Levene's test indicated homogeneity of variance was satisfied (F = `r round(levene_result$'F value'[1], 2)`, p = `r format.pval(levene_result$'Pr(>F)'[1], digits = 3)`). Since normality was strongly violated for the Delayed Recall condition (p < 0.01), the Wilcoxon test was prioritized as the primary analysis following our preregistered decision rule. For the sensitivity analysis, we applied Welch's t-test due to the normality violations, which showed Delayed Recall drawings (M = `r round(mean(delayed_accuracy), 3)`, SD = `r round(sd(delayed_accuracy), 3)`) were significantly more recognizable than Category Drawings (M = `r round(mean(category_accuracy), 3)`, SD = `r round(sd(category_accuracy), 3)`), t(`r round(t_result$parameter, 1)`) = `r round(t_result$statistic, 2)`, p = `r format.pval(t_result$p.value, digits = 3)`, Cohen's d = `r round(cohens_d, 2)`. Both the Wilcoxon test and t-test converged on the same conclusion regarding statistical significance and direction, strengthening confidence in the finding.
+
+```{r, out.width="60%", fig.cap="Q-Q plots for normality assessment", fig.align="center"}
+knitr::include_graphics("output/results/qq_plots.png")
+```
+
+**The preregistered criteria for successful replication were met**: the Wilcoxon test showed a significant difference (p < 0.05) and the effect size was large (r = `r round(rank_biserial, 3)` > 0.3 threshold), matching the original study's large effect.
+
+### Exploratory analyses
+
+In our preregistered primary analysis, due to insufficient raters, `r n_drawings_below_target` drawings were excluded from analysis. Given the large observed effect size, power should remain more than adequate despite these exclusions. To check the robustness of our result, we conduct an exploratory analysis using all ratings from all drawings. 
+
+```{r exploratory-full-sample}
+#| echo: true
+#| message: false
+#| warning: false
+
+library(effectsize)
+
+# extract by condition
+delayed_full <- drawing_accuracy$accuracy[drawing_accuracy$condition == "delayed_recall"]
+category_full <- drawing_accuracy$accuracy[drawing_accuracy$condition == "category"]
+
+wilcox_full <- wilcox.test(delayed_full, category_full, alternative = "two.sided")
+
+rank_biserial_full_result <- rank_biserial(delayed_full, category_full)
+rank_biserial_full <- rank_biserial_full_result$r_rank_biserial
+```
+
 ```{r fig.width=4, fig.height=5}
 #| echo: true
 #| message: false
@@ -378,38 +449,15 @@ ggsave("output/results/full_dataset_plot.png", plot = full_dataset_plot, width =
 
 ```
 
-The primary hypothesis was tested using a two-tailed Wilcoxon rank-sum test comparing accuracy distributions between Delayed Recall and Category drawings. Delayed Recall drawings (M = `r round(median(delayed_accuracy), 3)`) were significantly more recognizable than Category Drawings (M = `r round(median(category_accuracy), 3)`), W = `r wilcox_result$statistic`, p = `r format.pval(wilcox_result$p.value, digits = 3)`, rank-biserial r = `r round(rank_biserial, 3)`.
-
-**Assumption checks:** Both conditions violated normality assumptions (Delayed Recall: W = `r round(shapiro_delayed$statistic, 3)`, p = `r format.pval(shapiro_delayed$p.value, digits = 3)`; Category: W = `r round(shapiro_category$statistic, 3)`, p = `r format.pval(shapiro_category$p.value, digits = 3)`) but satisfied homogeneity of variance (F = `r round(levene_result$'F value'[1], 2)`, p = `r format.pval(levene_result$'Pr(>F)'[1], digits = 3)`). Following our preregistered decision rule, the Wilcoxon test was prioritized as the primary analysis given the normality violations. Welch's correction was applied for the sensitivity analysis as a conservative approach.
-
-**Sensitivity analysis:** Delayed Recall drawings (M = `r round(mean(delayed_accuracy), 3)`, SD = `r round(sd(delayed_accuracy), 3)`) were significantly more recognizable than Category Drawings (M = `r round(mean(category_accuracy), 3)`, SD = `r round(sd(category_accuracy), 3)`), t(`r round(t_result$parameter, 1)`) = `r round(t_result$statistic, 2)`, p = `r format.pval(t_result$p.value, digits = 3)`, Cohen's d = `r round(cohens_d, 2)`.
-
-**Replication success:** The preregistered criteria for successful replication were met: the Wilcoxon test showed a significant difference (p < 0.05) and the effect size was large (r = `r round(rank_biserial, 3)` > 0.3 threshold). The effect size matches the original study's very large effect.
-
-### Exploratory analyses
-
-```{r exploratory-full-sample}
-#| echo: false
-#| message: false
-#| warning: false
-
-library(effectsize)
-
-# Extract by condition (same as confirmatory)
-delayed_full <- drawing_accuracy$accuracy[drawing_accuracy$condition == "delayed_recall"]
-category_full <- drawing_accuracy$accuracy[drawing_accuracy$condition == "category"]
-
-# Use same test format as confirmatory
-wilcox_full <- wilcox.test(delayed_full, category_full, alternative = "two.sided")
-
-# rank-biserial using effectsize
-rank_biserial_full_result <- rank_biserial(delayed_full, category_full)
-rank_biserial_full <- rank_biserial_full_result$r_rank_biserial
+```{r, out.width="60%", fig.cap="Replication Results with the Full Sample", fig.align="center"}
+knitr::include_graphics("output/results/full_dataset_plot.png")
 ```
 
-**Analysis including drawings with fewer than 10 raters:** When including all `r nrow(drawing_accuracy)` drawings regardless of sample size, the pattern remained consistent. Delayed Recall drawings (M = `r round(median(delayed_full), 3)`) were significantly more recognizable than Category Drawings (M = `r round(median(category_full), 3)`), W = `r wilcox_full$statistic`, p = `r format.pval(wilcox_full$p.value, digits = 3)`, rank-biserial r = `r round(rank_biserial_full, 3)`. This demonstrates robustness of findings across different inclusion criteria.
+When including all `r nrow(drawing_accuracy)` drawings (including those with fewer than 10 raters), the pattern remained highly consistent and even more pronounced. Delayed Recall drawings achieved perfect median accuracy (Median = `r round(median(delayed_full), 3)`), while Category Drawings remained near chance levels (Median = `r round(median(category_full), 3)`), W = `r wilcox_full$statistic`, p = `r format.pval(wilcox_full$p.value, digits = 3)`, rank-biserial r = `r round(rank_biserial_full, 3)`. The effect size remained very large and essentially equivalent to our primary analysis, demonstrating that our exclusion criteria were appropriately conservative and that the core finding is robust. 
 
 ## Discussion
+
+Our replication successfully reproduced one of the core finding of Bainbridge et al. (2019). Delayed Recall drawings were signiicantly more recognizable than Category Drawings, closely matching the original results. The statisticall analysis yielded a very large effect size that was comparable to the original study's exceptionally large effect. Both the primary confirmatory analysis and the exploratory analysis with the full dataset converged on the same conclusion, demonstrating that drawings from memory contain detailed visual information specific to the studied images rather than merely canonical representations of scene categories.
 
 ### Summary of Replication Attempt
 
@@ -417,7 +465,9 @@ Open the discussion section with a paragraph summarizing the primary result from
 
 ### Commentary
 
-Add open-ended commentary (if any) reflecting (a) insights from follow-up exploratory analysis, (b) assessment of the meaning of the replication (or not) - e.g., for a failure to replicate, are the differences between original and present study ones that definitely, plausibly, or are unlikely to have been moderators of the result, and (c) discussion of any objections or challenges raised by the current and original authors about the replication attempt.  None of these need to be long.
+Several aspects of our replication strengthen confidence in the robustness of the original finding. Our methodological differences did not meaningfully alter the core result. This suggests the phenomenon generalizes well across methodological variations. 
+
+A promising avenue for future research would involving leveraging modern vision-language models like CLIP to computationally quantify drawing content and assess whether algorithmic judgments align with human recognition patterns. 
 
 ---
 
