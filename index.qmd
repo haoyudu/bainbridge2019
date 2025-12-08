@@ -56,7 +56,11 @@ The experimental task is programmed using the jsPsych library (de Leeuw, 2015) a
 
 The task design closely follows the original study's "Drawing matching online experiment" (Bainbridge et al., 2019), adapted from single-trial Amazon Mechanical Turk HITs to a multi-trial jsPsych session. Participants will first read instructions explaining that they will see drawings of everyday scenes and their task is to match each drawing to one of three photographs. On each trial, they will see one drawing and three photographs from the same scene category (e.g., three different kitchens), and should select which photograph they think the drawing best represents. Participants will be told that even if the drawing is rough or incomplete, they should try their best to make a match. The instructions note that the task will take approximately 12 minutes and request that the participants complete it in a quiet environment without distractions on a desktop or laptop computer (mobile devices will be excluded). Participants will remain naive to the experimental manipulation.  
 
-Each trial follows the structure of the original experiment. The drawing is displayed centered at the top of the screen, with three scene photographs presented in a horizontal row below. Following the original implementation, the spatial positions (left, center, right) of the three photographs are randomized on each trial using a shuffle algorithm. Participants select their response by clicking on one of the three photographs. After making a selection, participants click a "Continue" button to proceed to the next trial. 
+Each trial follows the structure of the original experiment. The drawing is displayed centered at the top of the screen, with three scene photographs presented in a horizontal row below. Following the original implementation, the spatial positions (left, center, right) of the three photographs are randomized on each trial using a shuffle algorithm. Participants select their response by clicking on one of the three photographs. 
+
+```{r, out.width="60%", fig.cap="Example Trial", fig.align="center"}
+knitr::include_graphics("output/results/experiment_example.png")
+```
 
 There is no time limit for responses, allowing participants to carefully consider their choices as in the original study. However, to ensure active engagement and data quality, the entire experimental session has a thirty minute time limit. Participants who do not complete all 60 trials within this window will be excluded from analysis. This session-level timeout is consistent with standard Amazon Mechanical Turk practices (though not explicitly reported in the original study) and is generous given the expected completion time of approximately 12 minutes.
 
@@ -458,12 +462,6 @@ When including all `r nrow(drawing_accuracy)` drawings (including those with few
 ## Discussion
 
 Our replication successfully reproduced one of the core finding of Bainbridge et al. (2019). Delayed Recall drawings were signiicantly more recognizable than Category Drawings, closely matching the original results. The statisticall analysis yielded a very large effect size that was comparable to the original study's exceptionally large effect. Both the primary confirmatory analysis and the exploratory analysis with the full dataset converged on the same conclusion, demonstrating that drawings from memory contain detailed visual information specific to the studied images rather than merely canonical representations of scene categories.
-
-### Summary of Replication Attempt
-
-Open the discussion section with a paragraph summarizing the primary result from the confirmatory analysis and the assessment of whether it replicated, partially replicated, or failed to replicate the original result.  
-
-### Commentary
 
 Several aspects of our replication strengthen confidence in the robustness of the original finding. Our methodological differences did not meaningfully alter the core result. This suggests the phenomenon generalizes well across methodological variations. 
 
